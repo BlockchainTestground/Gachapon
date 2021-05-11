@@ -1,0 +1,12 @@
+{
+    "name": "Warrior",    
+    "description": "Just a warrior",
+    "image": "https://ipfs.io/ipfs/QmX5vrsMrVrZx7UkLxQZfMYo3Fyp8dWna2TNsem6jV2pP7",
+    "attributes": 
+      [
+        {
+          "trait_type": "Strength",            
+          "value": 60        
+        }
+      ]
+  }

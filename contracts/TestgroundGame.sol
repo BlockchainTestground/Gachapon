@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.0;
+pragma solidity 0.8.5;
 
 import "./dependencies/VRFConsumerBase.sol";
 import "./dependencies/ERC721.sol";

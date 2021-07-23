@@ -1,13 +1,11 @@
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.5;
+pragma solidity 0.8.6;
 
 import "./dependencies/ERC20.sol";
 
 contract MyERC20 is ERC20 {
-  constructor (string memory name, string memory symbol) public
-    ERC20(name, symbol)
-  {
-    _mint(msg.sender, 101 * 10 ** uint(decimals()));
+  constructor () ERC20("My Token", "TKN10") {
+    _mint(msg.sender, 1000 ether);
   }
 
   function burn(uint256 amount) public {

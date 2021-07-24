@@ -66,9 +66,9 @@ contract TestgroundGame is ERC721, VRFConsumerBase {
     return string(abi.encodePacked(base, tokenId.toString()));
   }
 
-  function triggerGacha(uint256 userProvidedSeed) public returns (bytes32 _requestId) {
+  function triggerGacha() public returns (bytes32 _requestId) {
     require(LINK.balanceOf(address(this)) > fee, "Not enough LINK - fill contract with faucet");
-    bytes32 requestId = requestRandomness(keyHash, fee, userProvidedSeed);
+    bytes32 requestId = requestRandomness(keyHash, fee);
     requestIdToMsgSender[requestId] = msg.sender;
 
     logger = "gacha";

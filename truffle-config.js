@@ -60,6 +60,13 @@ module.exports = {
       timeoutBlocks: 200,
       skipDryRun: true
     },
+    rinkeby: {
+      provider: () => new HDWalletProvider(mnemonic, `https://rinkeby.infura.io/v3/a3e70735b4cf401b9148e1fea8f5a288`),
+      network_id: 4,
+      confirmations: 2,
+      timeoutBlocks: 200,
+      skipDryRun: true
+    },
     // development: {
     //  host: "127.0.0.1",     // Localhost (default: none)
     //  port: 8545,            // Standard Ethereum port (default: none)

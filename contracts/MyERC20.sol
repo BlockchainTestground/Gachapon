@@ -9,7 +9,7 @@ contract MyERC20 is ERC20 {
   }
 
   function burn(uint256 amount) public {
-      _burn(msg.sender, amount);
+    _burn(msg.sender, amount);
   }
 
   function mint(uint256 amount) public {

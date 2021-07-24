@@ -25,7 +25,15 @@ Currently deployed at `0x08fE642B2adC1B156961BE2e2730B436C8b57C7a` on testnet mu
 
 # Related contracts and documentation
 
-This project uses a [ERC20 Token](https://github.com/BlockchainTestground/MaticERC20) deployed at `0xd6d897b8FBF9b82c493dc256A2924bE41efda34f` in the mumbai network.
+Rinkeby:
+
+ERC20 Contract: `0x2478a40017373740Ee31B5b554f65Dfb48Df1e46`
+
+Gachapon Contract: `0xe540A4Cd48be4a1cD9ab24A1670A589344106C7E`
+
+Doge NFT URI: `https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA`
+
+ETH NFT URI: `https://ipfs.io/ipfs/QmXQVhyWEGDYRX4w5XW1LFeEUgBym56PLMS23UtSG1ox5x`
 
 This also uses the [Link Token Contract](https://docs.chain.link/docs/link-token-contracts/) and [Link VRF Contract](https://docs.chain.link/docs/vrf-contracts/).
 

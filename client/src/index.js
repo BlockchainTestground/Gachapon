@@ -11,7 +11,10 @@ import { roll,
   convertWeiToCrypto,
   convertCryptoToWei,
   getTokenAttack,
+  getTokenURI,
   getMyNFTs,
+  getMyBalance,
+  getMyTokenByIndex,
   getBalance,
   getMaximumBet,
   getMinimumBet,
@@ -319,38 +322,6 @@ function setStatusText(text, is_error)
     document.getElementById("status").style.color = "#000000";
 }
 
-
-async function show(nft_asset) {
-  var my_nfts_div = document.getElementById('my_nfts');
-  var elem = document.createElement("img")
-  elem.src = nft_asset.image_thumbnail_url
-  my_nfts_div.appendChild(elem)
-  var attack = await getTokenAttack(nft_asset.token_id)
-  console.log(attack)
-  my_nfts_div.innerHTML += '<br/>Attack: ' + attack;
-}
-
-function onGetMyNFTs()
-{
-  setStatusText("Getting assets", false)
-  getMyNFTs((json) => {
-    if(json.assets.length != my_asset_count)
-    {
-      setStatusText("New asset found!", false)
-      my_asset_count = json.assets.length
-      waiting_for_oracle = false
-    }
-    console.log(json.assets)
-    console.log(json.assets.length)
-    document.getElementById('my_nfts').innerHTML = ""
-    for(var i=0; i<json.assets.length; i++)
-    {
-      show(json.assets[i])
-    }
-    setStatusText("Assets retrieved", false)
-  });
-}
-
 function onRoll(selection)
 {
   place_bet.play()
@@ -401,12 +372,59 @@ function onMintNFT()
   });
 }
 
+async function showNFT(asset_id, attack, json_uri) {
+  console.log(attack)
+  console.log(json_uri.image)
+
+
+  var my_nfts_div = document.getElementById('my_nfts');
+  var elem = document.createElement("img")
+  elem.src = json_uri.image
+  my_nfts_div.appendChild(elem)
+  my_nfts_div.innerHTML += '<br/>Attack: ' + attack;
+  my_nfts_div.innerHTML += '<br/>Id: ' + asset_id;
+}
+
+function clearNFTDiv()
+{
+  document.getElementById('my_nfts').innerHTML = ""
+}
+
+async function balanceCheck() {
+  var my_balance = await getMyBalance()
+  console.log("My balance: " + my_balance)
+  if(my_asset_count != my_balance)
+  {
+    clearNFTDiv()
+    console.log("Let's go")
+    my_asset_count = my_balance
+    for(var i=0; i<my_asset_count; i++)
+    {
+      console.log("Uno")
+      var asset_id = await getMyTokenByIndex(i)
+      var attack = await getTokenAttack(asset_id)
+      var uri = await getTokenURI(asset_id)
+      console.log(asset_id)
+      console.log(attack)
+      console.log(uri)
+
+      fetch(uri)
+      .then(res => res.json())
+      .then(json_uri =>
+        showNFT(asset_id, attack, json_uri))
+      .catch(err => console.log(err));
+      //show(asset)
+    }
+  }
+}
+
 function poll() {
   console.log("polling...")
   if(waiting_for_oracle)
   {
   }
-  onGetMyNFTs()
+  //onGetMyNFTs()
+  balanceCheck()
 
   if(isConnected())
   {

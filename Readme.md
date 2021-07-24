@@ -27,9 +27,16 @@ Currently deployed at `0x08fE642B2adC1B156961BE2e2730B436C8b57C7a` on testnet mu
 
 Rinkeby:
 
-ERC20 Contract: `0x2478a40017373740Ee31B5b554f65Dfb48Df1e46`
+ERC20 Contract: `0x580Bc45A840EEba370D044d75370d1d5CBE9a5fc`
 
-Gachapon Contract: `0xe540A4Cd48be4a1cD9ab24A1670A589344106C7E`
+Gachapon Contract: `0xC7997c3767A8AACD8DE3c9972C6c7FDf97E9E37E`
+
+```
+npx truffle console --network rinkeby
+gacha = await Gachapon.deployed()
+gacha.addURIToPool("https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA")
+gacha.addURIToPool("https://ipfs.io/ipfs/QmXQVhyWEGDYRX4w5XW1LFeEUgBym56PLMS23UtSG1ox5x")
+```
 
 Doge NFT URI: `https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA`
 

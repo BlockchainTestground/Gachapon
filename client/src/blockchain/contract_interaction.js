@@ -24,19 +24,25 @@ function onDisconnect() {
   //document.getElementById("logout-button").style.display = "none"
 }
 
-
-
-async function asyncCall() {
-  console.log('calling');
-  const result = await resolveAfter2Seconds();
-  console.log(result);
-  // expected output: "resolved"
-}
-
-
 var getTokenAttack = async function(token_id) {
   var attack = await contract.methods.token_attack(token_id).call()
   return attack
+}
+
+var getTokenURI = async function(token_id) {
+  var uri_id = await contract.methods.token_uri_ids(token_id).call()
+  var uri = await contract.methods.uri_pool(uri_id).call()
+  return uri
+}
+
+var getMyBalance = async function() {
+  var balance = await contract.methods.balanceOf(accounts[0]).call()
+  return balance
+}
+
+var getMyTokenByIndex = async function(index) {
+  var token = await contract.methods.tokenOfOwnerByIndex(accounts[0], index).call()
+  return token
 }
 
 var getMyNFTs = async function (callback) {
@@ -276,7 +282,10 @@ export {
   convertWeiToCrypto,
   convertCryptoToWei,
   getTokenAttack,
+  getTokenURI,
   getMyNFTs,
+  getMyBalance,
+  getMyTokenByIndex,
   getBalance,
   getMaximumBet,
   getMinimumBet,

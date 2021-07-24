@@ -3,9 +3,10 @@ pragma solidity 0.8.6;
 
 import "./dependencies/ERC20.sol";
 import "./dependencies/ERC721.sol";
+import "./dependencies/ERC721Enumerable.sol";
 import "./dependencies/VRFConsumerBase.sol";
 
-contract Gachapon is ERC721, VRFConsumerBase {
+contract Gachapon is ERC721, ERC721Enumerable, VRFConsumerBase {
   uint MAXIMUM_ATTACK = 100;
   uint256 public token_count;
   mapping (uint256 => uint256) public token_uri_ids;
@@ -57,5 +58,21 @@ contract Gachapon is ERC721, VRFConsumerBase {
     uint256 randomness2 = uint256(keccak256(abi.encode(randomness, 1)));
     token_uri_ids[token_count] = randomness1 % uri_pool.length;
     token_attack[token_count] = (randomness2 % MAXIMUM_ATTACK) + 1;
+  }
+
+  function supportsInterface(bytes4 interfaceId)
+    public
+    view
+    override(ERC721, ERC721Enumerable)
+    returns (bool)
+  {
+      return super.supportsInterface(interfaceId);
+  }
+
+  function _beforeTokenTransfer(address from, address to, uint256 tokenId)
+    internal
+    override(ERC721, ERC721Enumerable)
+  {
+    super._beforeTokenTransfer(from, to, tokenId);
   }
 }

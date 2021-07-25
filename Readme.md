@@ -27,11 +27,14 @@ Currently deployed at `0x08fE642B2adC1B156961BE2e2730B436C8b57C7a` on testnet mu
 
 Rinkeby:
 
-ERC20 Contract: `0x580Bc45A840EEba370D044d75370d1d5CBE9a5fc`
+ERC20 Contract: `0x3F3f865d267DCb75fcC0184c4145aC17D8DaAaF4`
 
-Gachapon Contract: `0xC7997c3767A8AACD8DE3c9972C6c7FDf97E9E37E`
+Gachapon Contract: `0x033339A9BcdeCE1Fc33ef019a1ba3598d6983De9`
 
+Game: `0xF6bF93d0b2C8d64f7132cEBddAB831E5583753Bb`
 ```
+truffle migrate --network matic --reset
+
 npx truffle console --network rinkeby
 gacha = await Gachapon.deployed()
 gacha.addURIToPool("https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA")

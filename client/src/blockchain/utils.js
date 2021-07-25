@@ -1,6 +1,7 @@
 import Web3 from "./web3.js";
 
-var SMART_CONTRACT_ABI_PATH = "./contracts/Gachapon.json"
+var GACHA_CONTRACT_ABI_PATH = "./contracts/Gachapon.json"
+var GAME_CONTRACT_ABI_PATH  = "./contracts/TestgroundGame.json"
 
 function metamaskReloadCallback()
 {
@@ -75,19 +76,33 @@ async function getRevertReason(txHash) {
     });
 }
 
-var contract
+var gacha_contract
+var game_contract
 
-const getContract = async (web3) => {
-  const response = await fetch(SMART_CONTRACT_ABI_PATH);
+const getGachaContract = async (web3) => {
+  const response = await fetch(GACHA_CONTRACT_ABI_PATH);
   const data = await response.json();
   
   const netId = await web3.eth.net.getId();
   const deployedNetwork = data.networks[netId];
-  contract = new web3.eth.Contract(
+  gacha_contract = new web3.eth.Contract(
     data.abi,
     deployedNetwork && deployedNetwork.address
     );
-  return contract
+  return gacha_contract
+};
+
+const getGameContract = async (web3) => {
+  const response = await fetch(GAME_CONTRACT_ABI_PATH);
+  const data = await response.json();
+  
+  const netId = await web3.eth.net.getId();
+  const deployedNetwork = data.networks[netId];
+  game_contract = new web3.eth.Contract(
+    data.abi,
+    deployedNetwork && deployedNetwork.address
+    );
+  return game_contract
 };
 
 const convertToDateString = (epochTime) => {
@@ -104,4 +119,4 @@ const convertCryptoToWei = (crypto) => {
   return web3.utils.toWei(crypto, "ether");
 };
 
-export { getWeb3, getContract, convertWeiToCrypto, convertCryptoToWei, getRevertReason }
+export { getWeb3, getGachaContract, getGameContract, convertWeiToCrypto, convertCryptoToWei, getRevertReason }

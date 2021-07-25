@@ -379,10 +379,13 @@ async function showNFT(asset_id, attack, json_uri) {
 
   var my_nfts_div = document.getElementById('my_nfts');
   var elem = document.createElement("img")
+  elem.width = 200
   elem.src = json_uri.image
   my_nfts_div.appendChild(elem)
-  my_nfts_div.innerHTML += '<br/>Attack: ' + attack;
-  my_nfts_div.innerHTML += '<br/>Id: ' + asset_id;
+  my_nfts_div.innerHTML += '<p>';
+  my_nfts_div.innerHTML += 'Attack: ' + attack;
+  my_nfts_div.innerHTML += '<br>Id: ' + asset_id;
+  my_nfts_div.innerHTML += '</p>';
 }
 
 function clearNFTDiv()

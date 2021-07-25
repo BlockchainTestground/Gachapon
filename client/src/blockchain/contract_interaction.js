@@ -1,9 +1,10 @@
-import {getWeb3, getContract, convertWeiToCrypto, convertCryptoToWei, getRevertReason} from './utils.js';
+import {getWeb3, getGameContract, getGachaContract, convertWeiToCrypto, convertCryptoToWei, getRevertReason} from './utils.js';
 
 var NETWORK_ID = 137 //Matic
 var TESTNET_ID = 4   //Rinkeby
 //var NETWORK_ID = 80001 //Mumbai
-var contract
+var gacha_contract
+var game_contract
 var accounts
 var balance
 var onConfirmClickCallback
@@ -25,23 +26,23 @@ function onDisconnect() {
 }
 
 var getTokenAttack = async function(token_id) {
-  var attack = await contract.methods.token_attack(token_id).call()
+  var attack = await gacha_contract.methods.token_attack(token_id).call()
   return attack
 }
 
 var getTokenURI = async function(token_id) {
-  var uri_id = await contract.methods.token_uri_ids(token_id).call()
-  var uri = await contract.methods.uri_pool(uri_id).call()
+  var uri_id = await gacha_contract.methods.token_uri_ids(token_id).call()
+  var uri = await gacha_contract.methods.uri_pool(uri_id).call()
   return uri
 }
 
 var getMyBalance = async function() {
-  var balance = await contract.methods.balanceOf(accounts[0]).call()
+  var balance = await gacha_contract.methods.balanceOf(accounts[0]).call()
   return balance
 }
 
 var getMyTokenByIndex = async function(index) {
-  var token = await contract.methods.tokenOfOwnerByIndex(accounts[0], index).call()
+  var token = await gacha_contract.methods.tokenOfOwnerByIndex(accounts[0], index).call()
   return token
 }
 
@@ -74,9 +75,9 @@ function setConfirmTransactionCallback(confirmClickCallback) {
 
 async function onConnect() {
   accounts = await web3.eth.getAccounts()
-  maximum_bet = await contract.methods.maximum_bet().call()
-  minimum_bet = await contract.methods.minimum_bet().call()
-  bet_percentage_fee = await contract.methods.bet_percentage_fee().call()
+  maximum_bet = await gacha_contract.methods.maximum_bet().call()
+  minimum_bet = await gacha_contract.methods.minimum_bet().call()
+  bet_percentage_fee = await gacha_contract.methods.bet_percentage_fee().call()
 
   document.getElementById("my-address").innerHTML = accounts[0].substring(0, 6) + "..." + accounts[0].substring(accounts[0].length-4, accounts[0].length)
   document.getElementById("wallet-disconnected").style.display = "none"
@@ -98,7 +99,8 @@ async function initContractInteraction() {
       if (netId == NETWORK_ID || netId == TESTNET_ID) {
         document.getElementById("loading-web3").style.display = "none";
         var awaitContract = async function () {
-          contract = await getContract(web3);
+          gacha_contract = await getGachaContract(web3);
+          game_contract = await getGameContract(web3);
           var awaitAccounts = async function () {
             onConnect()
           };
@@ -119,7 +121,7 @@ async function initContractInteraction() {
 initContractInteraction()
 
 var mintNFT = async function (callback) {
-  await contract.methods
+  await gacha_contract.methods
     .mintNFT(accounts[0])
     .send({ from: accounts[0], gas: 400000 })
     .on('transactionHash', function(hash){
@@ -144,7 +146,7 @@ var mintNFT = async function (callback) {
 }
 
 var roll = async function (selection, amount, callback) {
-  await contract.methods
+  await gacha_contract.methods
     .roll(selection)
     .send({ from: accounts[0], gas: 400000, value: convertCryptoToWei(amount) })
     .on('transactionHash', function(hash){
@@ -169,25 +171,25 @@ var roll = async function (selection, amount, callback) {
 }
 
 var getPlayerRequestId = async function (callback) {
-  var result = await contract.methods
+  var result = await gacha_contract.methods
   .player_request_id(accounts[0]).call()
   callback(result)
 }
 
 var getContractBalance = async function (callback) {
-  var result = await web3.eth.getBalance(contract.options.address)
-  console.log(contract.options.address)
+  var result = await web3.eth.getBalance(gacha_contract.options.address)
+  console.log(gacha_contract.options.address)
   callback(result)
 }
 
 var getLinkBalance = async function (callback) {
-  var result = await contract.methods
+  var result = await gacha_contract.methods
   .getLinkBalance().call()
   callback(result)
 }
 
 var getGame = async function (request_id, callback) {
-  var result = await contract.methods
+  var result = await gacha_contract.methods
     .games(request_id).call()
   callback(result)
 }

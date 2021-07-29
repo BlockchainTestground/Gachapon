@@ -27,18 +27,17 @@ Currently deployed at `0x08fE642B2adC1B156961BE2e2730B436C8b57C7a` on testnet mu
 
 Rinkeby:
 
-ERC20 Contract: `0x3F3f865d267DCb75fcC0184c4145aC17D8DaAaF4`
+ERC20 Contract: `0x6ab0bd23Aaf0529483b879B75476940815AB6392`
 
-Gachapon Contract: `0x033339A9BcdeCE1Fc33ef019a1ba3598d6983De9`
+Gachapon Contract: `0x7857d26266a01AC9899058B0BD4a2679CA45Ea49`
 
-Game: `0xF6bF93d0b2C8d64f7132cEBddAB831E5583753Bb`
+Game: `0x10748EA8C530f92b44D51DdA8473f6FeA99FeFE9`
 ```
-truffle migrate --network matic --reset
+truffle migrate --network rinkeby --reset
 
-npx truffle console --network rinkeby
-gacha = await Gachapon.deployed()
-gacha.addURIToPool("https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA")
-gacha.addURIToPool("https://ipfs.io/ipfs/QmXQVhyWEGDYRX4w5XW1LFeEUgBym56PLMS23UtSG1ox5x")
+npx truffle exec "./scripts/add_classes.js" --network rinkeby
+npx truffle exec "./scripts/add_rarities.js" --network rinkeby
+npx truffle exec "./scripts/add_uris.js" --network rinkeby
 ```
 
 Doge NFT URI: `https://ipfs.io/ipfs/QmSibHP8La2HmZostakEq6sWVMs8aoQGqGuTAWfxBrtqNA`

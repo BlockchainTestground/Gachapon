@@ -31,8 +31,7 @@ var getTokenAttack = async function(token_id) {
 }
 
 var getTokenURI = async function(token_id) {
-  var uri_id = await gacha_contract.methods.token_uri_ids(token_id).call()
-  var uri = await gacha_contract.methods.uri_pool(uri_id).call()
+  var uri = await gacha_contract.methods.tokenURI(token_id).call()
   return uri
 }
 

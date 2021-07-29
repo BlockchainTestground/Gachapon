@@ -7,11 +7,14 @@ import "./dependencies/ERC721Enumerable.sol";
 import "./dependencies/VRFConsumerBase.sol";
 
 contract Gachapon is ERC721, ERC721Enumerable, VRFConsumerBase {
-  uint MAXIMUM_ATTACK = 100;
+  uint MAXIMUM_ATTACK = 10;
   uint256 public token_count;
-  mapping (uint256 => uint256) public token_uri_ids;
   mapping (bytes32 => address) public request_address;
-  string[] public uri_pool;
+  string[] public class_pool;
+  string[] public rarity_pool;
+  mapping (string => mapping (string => mapping (uint => string))) uri_pool; // maps Class->Rarity->Atk
+  mapping (uint256 => string) public token_class;
+  mapping (uint256 => string) public token_rarity;
   mapping (uint256 => uint) public token_attack;
 
   //Chainlink preset variables
@@ -29,15 +32,23 @@ contract Gachapon is ERC721, ERC721Enumerable, VRFConsumerBase {
 
   function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {
     require(_exists(tokenId), "ERC721Metadata: URI query for nonexistent token");
-    return uri_pool[token_uri_ids[tokenId]];
+    return uri_pool[token_class[tokenId]][token_rarity[tokenId]][token_attack[tokenId]];
   }
 
-  function addURIToPool(string memory uri) public {
-    uri_pool.push(uri);
+  function addURIToPool(string memory uri, string memory class, string memory rarity, uint attack) public {
+    uri_pool[class][rarity][attack] = uri;
   }
 
-  function setURIInPool(uint256 id, string memory uri) public {
-    uri_pool[id] = uri;
+  function addClassToPool(string memory class) public {
+    class_pool.push(class);
+  }
+
+  function addRarityToPool(string memory rarity) public {
+    rarity_pool.push(rarity);
+  }
+
+  function setURIInPool(string memory uri, string memory class, string memory rarity, uint256 attack) public {
+    uri_pool[class][rarity][attack] = uri;
   }
 
   function mintNFT(address to) public
@@ -56,8 +67,15 @@ contract Gachapon is ERC721, ERC721Enumerable, VRFConsumerBase {
     _mint(request_address[requestId], token_count);
     uint256 randomness1 = uint256(keccak256(abi.encode(randomness, 0)));
     uint256 randomness2 = uint256(keccak256(abi.encode(randomness, 1)));
-    token_uri_ids[token_count] = randomness1 % uri_pool.length;
-    token_attack[token_count] = (randomness2 % MAXIMUM_ATTACK) + 1;
+    uint256 randomness3 = uint256(keccak256(abi.encode(randomness, 1)));
+
+    string memory class = class_pool[randomness1 % class_pool.length];
+    string memory rarity = rarity_pool[randomness2 % rarity_pool.length];
+    uint256 attack = (randomness3 % MAXIMUM_ATTACK) + 5;
+
+    token_class[token_count] = class;
+    token_rarity[token_count] = rarity;
+    token_attack[token_count] = attack;
   }
 
   function supportsInterface(bytes4 interfaceId)

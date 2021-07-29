@@ -1,0 +1,19 @@
+{
+  "name": "Ethereum [Rare]",
+  "description": "Ethereum fighter",
+  "image": "https://ipfs.io/ipfs/QmV57h5isBvSXeFaAUUtkxNYpV8zUSdC2ofasqH6qsG8SW?filename=eth_rare.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": "rare"
+    },
+    {
+      "trait_type": "class",
+      "value": "ethereum"
+    },
+    {
+      "trait_type": "attack",
+      "value": 10
+    }
+  ]
+}

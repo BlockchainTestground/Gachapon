@@ -1,0 +1,19 @@
+{
+  "name": "Ethereum",
+  "description": "Ethereum fighter",
+  "image": "https://ipfs.io/ipfs/QmZ1s7CDiqtJ9p9VY1j2z8uNKurYfxz24L1TvaJXMm8ZnX?filename=eth_normal.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": "normal"
+    },
+    {
+      "trait_type": "class",
+      "value": "ethereum"
+    },
+    {
+      "trait_type": "attack",
+      "value": 8
+    }
+  ]
+}

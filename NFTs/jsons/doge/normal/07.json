@@ -1,0 +1,19 @@
+{
+  "name": "Doge",
+  "description": "Doge fighter",
+  "image": "https://ipfs.io/ipfs/QmbCF8XjKxoRViJihd4k7JWHoEpv6BQkuFFDWwtkzMhExZ?filename=doge_normal.png",
+  "attributes": [
+    {
+      "trait_type": "rarity",
+      "value": "normal"
+    },
+    {
+      "trait_type": "class",
+      "value": "doge"
+    },
+    {
+      "trait_type": "attack",
+      "value": 7
+    }
+  ]
+}

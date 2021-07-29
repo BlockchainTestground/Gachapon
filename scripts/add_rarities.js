@@ -1,4 +1,8 @@
-gachapon = await Gachapon.deployed()
+const Gachapon = artifacts.require("Gachapon");
 
-await gachapon.addRarityToPool("normal")
-await gachapon.addRarityToPool("rare")
+module.exports = async function(callback) {
+  gachapon = await Gachapon.deployed()
+  await gachapon.addRarityToPool("normal")
+  await gachapon.addRarityToPool("rare")
+  callback()
+}

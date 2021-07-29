@@ -1,14 +1,12 @@
-async function asyncCall(callback) {
-  console.log("1wx")
-  gachapon = await Gachapon.deployed()
-  console.log("2")
-  await gachapon.addClassToPool("eth")
-  console.log("3")
-  await gachapon.addClassToPool("doge")
-}
+const Gachapon = artifacts.require("Gachapon");
 
 module.exports = async function(callback) {
-  callback.then((x) => {
-    console.log(123)
-  })
+  console.log("Init")
+  gachapon = await Gachapon.deployed()
+  console.log("Got the contract")
+  await gachapon.addClassToPool("eth")
+  console.log("pass")
+  await gachapon.addClassToPool("doge")
+  console.log("pass")
+  callback()
 }

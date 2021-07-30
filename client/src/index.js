@@ -10,6 +10,8 @@ import { roll,
   getGame,
   convertWeiToCrypto,
   convertCryptoToWei,
+  getTokenClass,
+  getTokenRarity,
   getTokenAttack,
   getTokenURI,
   getMyNFTs,
@@ -372,7 +374,7 @@ function onMintNFT()
   });
 }
 
-async function showNFT(asset_id, attack, json_uri) {
+async function showNFT(asset_id, _class, rarity, attack, json_uri) {
   console.log(attack)
   console.log(json_uri.image)
 
@@ -382,10 +384,12 @@ async function showNFT(asset_id, attack, json_uri) {
   elem.width = 200
   elem.src = json_uri.image
   my_nfts_div.appendChild(elem)
-  my_nfts_div.innerHTML += '<p>';
-  my_nfts_div.innerHTML += 'Attack: ' + attack;
-  my_nfts_div.innerHTML += '<br>Id: ' + asset_id;
-  my_nfts_div.innerHTML += '</p>';
+  my_nfts_div.innerHTML += '<p>'
+  my_nfts_div.innerHTML += 'Class: ' + _class
+  my_nfts_div.innerHTML += '<br>Rarity: ' + rarity
+  my_nfts_div.innerHTML += '<br>Attack: ' + attack
+  my_nfts_div.innerHTML += '<br>Id: ' + asset_id
+  my_nfts_div.innerHTML += '</p>'
 }
 
 function clearNFTDiv()
@@ -406,6 +410,8 @@ async function balanceCheck() {
       console.log("Uno")
       var asset_id = await getMyTokenByIndex(i)
       var attack = await getTokenAttack(asset_id)
+      var _class = await getTokenClass(asset_id)
+      var rarity = await getTokenRarity(asset_id)
       var uri = await getTokenURI(asset_id)
       console.log(asset_id)
       console.log(attack)
@@ -414,7 +420,7 @@ async function balanceCheck() {
       fetch(uri)
       .then(res => res.json())
       .then(json_uri =>
-        showNFT(asset_id, attack, json_uri))
+        showNFT(asset_id, _class, rarity, attack, json_uri))
       .catch(err => console.log(err));
       //show(asset)
     }

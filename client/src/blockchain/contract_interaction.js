@@ -25,6 +25,16 @@ function onDisconnect() {
   //document.getElementById("logout-button").style.display = "none"
 }
 
+var getTokenClass = async function(token_id) {
+  var _class = await gacha_contract.methods.token_class(token_id).call()
+  return _class
+}
+
+var getTokenRarity = async function(token_id) {
+  var rarity = await gacha_contract.methods.token_rarity(token_id).call()
+  return rarity
+}
+
 var getTokenAttack = async function(token_id) {
   var attack = await gacha_contract.methods.token_attack(token_id).call()
   return attack
@@ -282,6 +292,8 @@ export {
   getGame,
   convertWeiToCrypto,
   convertCryptoToWei,
+  getTokenClass,
+  getTokenRarity,
   getTokenAttack,
   getTokenURI,
   getMyNFTs,

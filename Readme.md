@@ -27,13 +27,15 @@ Currently deployed at `0x08fE642B2adC1B156961BE2e2730B436C8b57C7a` on testnet mu
 
 Rinkeby:
 
-ERC20 Contract: `0x06aCe42A67a868dfaE9aB73B1692a6aDa3cA4714`
+ERC20 Contract: `0x7962698a3b6979c6CAA6fF9f52d23fE5f05Bb17C`
 
-Gachapon Contract: `0x305854915144Db2ea20dfceE1E9bf1f5350DD5f1`
+Gachapon Contract: `0xcE2126BeC2Ef1cCE980f1d73828703432F450Ee5`
 
-Game: `0x2013E974B3F5d79E919c697C97E70025143EFc1d`
+Duel: `0x87ad8015583457f1ff049c404b4Dca5a651d98D9`
 ```
 truffle migrate --network rinkeby --reset
+
+npx truffle exec "./scripts/run_all.js" --network rinkeby
 
 npx truffle exec "./scripts/add_classes.js" --network rinkeby
 npx truffle exec "./scripts/add_rarities.js" --network rinkeby

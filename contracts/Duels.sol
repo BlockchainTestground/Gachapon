@@ -5,7 +5,7 @@ import "./dependencies/VRFConsumerBase.sol";
 import "./Gachapon.sol";
 
 contract Duels is VRFConsumerBase{
-  Gachapon gachapon = Gachapon(0x033339A9BcdeCE1Fc33ef019a1ba3598d6983De9);
+  Gachapon gachapon;
   enum State { Pending, Declined, Canceled, Accepted, ChallengerWon, ChallengedWon }
   mapping(uint256 => Challenge) public challenges;
   mapping(bytes32 => uint256) public request_challenge_id;
@@ -16,11 +16,14 @@ contract Duels is VRFConsumerBase{
   bytes32 KEYHASH = 0x2ed0feb3e7fd2022120aa84fab1945545a9f2ffc9076fd6156fa96eaff4c1311;
   uint256 internal FEE = 0.1 ether;
 
-  constructor()
+  constructor(address gachapon_address)
     VRFConsumerBase(
       VRF_COORDINATOR, // VRF Coordinator
       LINK_TOKEN // LINK Token
-    ){}
+    )
+  {
+    gachapon = Gachapon(gachapon_address);
+  }
 
   uint256 challenge_count;
   struct Challenge
